@@ -1,75 +1,52 @@
-import java.util.*;
-class Stack{
-    private int[] dataArray;
-    Stack(){
-        dataArray=new int[0];
-    }
-    public void push(int data){
-        extendsArray();
-        dataArray[dataArray.length-1]=data;
-    }
-    private void extendsArray(){
-        int[] tempDataArray=new int[dataArray.length+1];
-        for (int i = 0; i < dataArray.length; i++){
-            tempDataArray[i]=dataArray[i];
-        }
-        dataArray=tempDataArray;
-    }
-    private boolean isEmpty(){
-        return dataArray.length<=0;
-    }
-    public void printStack(){
-        System.out.print("[");
-        for (int i = dataArray.length-1; i >=0 ; i--){
-            System.out.print(dataArray[i]+", ");
-        }
-        System.out.println(isEmpty()? "empty]":"\b\b]");
-    }
-    public int size(){
-        return dataArray.length;
-    }
-    public void clear(){
-        dataArray=new int[0];
-    }
-    public void pop(){
-        if(dataArray.length>0){
-            int[] tempDataArray=new int[dataArray.length-1];
-            for(int i=0; i<tempDataArray.length; i++){
-                tempDataArray[i]=dataArray[i];
-            }
-            dataArray=tempDataArray;
-        }else{
-            System.out.println("Stakc is empty...");
-        }
-    }
-    public boolean contains(int data){
-        for (int i = 0; i < dataArray.length; i++){
-            if(dataArray[i]==data){
-                return true;
-            }
-        }
-        return false;
-    }
+class Box{
+    int length;
+    int width;
+    int height;
 
-    public int[] toArray(){
-        int[] temp = new int[dataArray.length];
-        for(int i=0; i< dataArray.length;i++){
-            temp[i] = dataArray[dataArray.length-1-i];
-        }
+    public Box(int length,int width, int height){
+        this.length=length;
+        this.width=width;
+        this.height=height;
+    }
+    public Box(){}
+    public void printVolume(){
+        int volume;
+        volume=length*width*height;
+        System.out.println("Volume of the box : "+volume);
+
+    }
+    public void setValues(int length, int width, int height){
+        this.length=length;
+        this.width=width;
+        this.height=height;
+    }
+    public void copyValuesFrom(Box box){
+        this.length=box.length;
+        this.width=box.width;
+        this.height=box.height;
+    }
+    public Box getCopy(){
+        Box temp=new Box();
+        //copy value from this object to temp
+        temp.setValues(length,width,height);
         return temp;
+        //return new Box(length,width,height); //Legal
     }
 }
 class Demo{
-    public static void main(String args[]){
-        Stack s1=new Stack();
-        s1.push(10);
-        s1.push(20);
-        s1.push(30);
-        s1.push(40);
-        s1.push(50);
-        s1.printStack(); //[50,40,30,20,10]
+    public static void main(String[] args){
+        Box b1=new Box(12,5,3); //
+        System.out.println("length of b1 : "+b1.length);//12
+        System.out.println("width  of b1 : "+b1.width); //5
+        System.out.println("height of b1 : "+b1.height);//3
+        b1.printVolume(); //180
 
-        int[] ar=s1.toArray();
-        System.out.println(Arrays.toString(ar)); //[50,40,30,20,10]
+        Box b2=b1.getCopy();
+
+        System.out.println("length of b2 : "+b2.length);//12
+        System.out.println("width  of b2 : "+b2.width); //5
+        System.out.println("height of b2 : "+b2.height);//3
+        b2.printVolume(); //180
+        System.out.println(b1==b2); //false
     }
 }
